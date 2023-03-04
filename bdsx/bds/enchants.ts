@@ -132,6 +132,9 @@ export class EnchantmentInstance extends NativeStruct {
     getEnchantType(): Enchantments {
         abstract();
     }
+    setEnchantLevel(level: number): void {
+        abstract();
+    }
 }
 
 @nativeClass()

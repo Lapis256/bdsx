@@ -3061,6 +3061,7 @@ MobEffectInstance.load = function (tag) {
 
 // enchants.ts
 EnchantmentInstance.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: EnchantmentInstance });
+EnchantmentInstance.prototype.setEnchantLevel = procHacker.js("?setEnchantLevel@EnchantmentInstance@@QEAAXH@Z", void_t, { this: EnchantmentInstance }, int32_t);
 
 ItemEnchants.prototype.getSlot = procHacker.js("?getSlot@ItemEnchants@@QEBAHXZ", int32_t, { this: ItemEnchants });
 
