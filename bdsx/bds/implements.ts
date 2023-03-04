@@ -3123,6 +3123,8 @@ EnchantUtils.applyEnchant = function applyEnchant(
 EnchantUtils.getEnchantLevel = procHacker.js("?getEnchantLevel@EnchantUtils@@SAHW4Type@Enchant@@AEBVItemStackBase@@@Z", int32_t, null, uint8_t, ItemStack);
 EnchantUtils.hasCurse = procHacker.js("?hasCurse@EnchantUtils@@SA_NAEBVItemStackBase@@@Z", bool_t, null, ItemStack);
 EnchantUtils.hasEnchant = procHacker.js("?hasEnchant@EnchantUtils@@SA_NW4Type@Enchant@@AEBVItemStackBase@@@Z", bool_t, null, int16_t, ItemStack);
+EnchantUtils.isCurse = procHacker.js("?isCurse@EnchantUtils@@SA_NW4Type@Enchant@@@Z", bool_t, null, uint8_t);
+EnchantUtils.removeEnchants = procHacker.js("?removeEnchants@EnchantUtils@@SAXAEAVItemStack@@@Z", void_t, null, ItemStack);
 
 // nbt.ts
 const tagTypes: NativeClassType<Tag>[] = [

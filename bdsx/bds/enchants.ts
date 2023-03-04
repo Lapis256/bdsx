@@ -202,4 +202,10 @@ export namespace EnchantUtils {
     export function hasEnchant(enchant: Enchantments, itemStack: ItemStack): boolean {
         abstract();
     }
+    export function isCurse(type: Enchantments): boolean {
+        abstract();
+    }
+    export function removeEnchants(itemStack: ItemStack): void {
+        abstract();
+    }
 }
