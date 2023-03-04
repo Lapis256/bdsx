@@ -3063,7 +3063,24 @@ MobEffectInstance.load = function (tag) {
 EnchantmentInstance.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: EnchantmentInstance });
 EnchantmentInstance.prototype.setEnchantLevel = procHacker.js("?setEnchantLevel@EnchantmentInstance@@QEAAXH@Z", void_t, { this: EnchantmentInstance }, int32_t);
 
+ItemEnchants.prototype.getAllEnchants = procHacker.js(
+    "?getAllEnchants@ItemEnchants@@QEBA?AV?$vector@VEnchantmentInstance@@V?$allocator@VEnchantmentInstance@@@std@@@std@@XZ",
+    CxxVector.make(EnchantmentInstance),
+    { this: ItemEnchants, structureReturn: true },
+);
+ItemEnchants.prototype.getEnchantNames = procHacker.js(
+    "?getEnchantNames@ItemEnchants@@QEBA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ",
+    CxxVector$string,
+    { this: ItemEnchants, structureReturn: true },
+);
+ItemEnchants.prototype.getEnchantment = procHacker.js(
+    "?getEnchantment@ItemEnchants@@QEAA?AVEnchantmentInstance@@W4Type@Enchant@@@Z",
+    EnchantmentInstance,
+    { this: ItemEnchants },
+    uint8_t,
+);
 ItemEnchants.prototype.getSlot = procHacker.js("?getSlot@ItemEnchants@@QEBAHXZ", int32_t, { this: ItemEnchants });
+ItemEnchants.prototype.isEmpty = procHacker.js("?isEmpty@ItemEnchants@@QEBA_NXZ", bool_t, { this: ItemEnchants });
 
 EnchantUtils.applyEnchant = procHacker.js(
     "?applyEnchant@EnchantUtils@@SA_NAEAVItemStackBase@@W4Type@Enchant@@H_N@Z",

@@ -144,17 +144,41 @@ export class ItemEnchants extends NativeClass {
      */
     @nativeField(uint32_t)
     slot: uint32_t;
+    /**
+     * @deprecated use {@link getAllEnchants} instead.
+     *
+     * 1-8
+     */
     @nativeField(CxxVector.make(EnchantmentInstance), 0x08)
-    /** 1-8 */
     enchants1: CxxVector<EnchantmentInstance>;
-    /** 9-18 */
+    /**
+     * @deprecated use {@link getAllEnchants} instead.
+     *
+     * 9-18
+     */
     @nativeField(CxxVector.make(EnchantmentInstance))
     enchants2: CxxVector<EnchantmentInstance>;
-    /** >19 */
+    /**
+     * @deprecated use {@link getAllEnchants} instead.
+     *
+     * 19-
+     */
     @nativeField(CxxVector.make(EnchantmentInstance))
     enchants3: CxxVector<EnchantmentInstance>;
 
-    getSlot(): Enchant.Slot {
+    getAllEnchants(): CxxVector<EnchantmentInstance> {
+        abstract();
+    }
+    getEnchantNames(): CxxVector<string> {
+        abstract();
+    }
+    getEnchantment(type: Enchantments): EnchantmentInstance {
+        abstract();
+    }
+    getSlot(): number {
+        abstract();
+    }
+    isEmpty(): boolean {
         abstract();
     }
 }
