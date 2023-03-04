@@ -47,6 +47,32 @@ export namespace Enchant {
         NumEnchantments,
         InvalidEnchantment,
     }
+
+    export enum Slot {
+        All = -1,
+        None = 0,
+        ArmorHelmet = 0x1,
+        ArmorChest = 0x2,
+        ArmorBoots = 0x4,
+        ArmorLeggings = 0x8,
+        Sword = 0x10,
+        Bow = 0x20,
+        Hoe = 0x40,
+        Shears = 0x80,
+        FlintAndSteel = 0x100,
+        Axe = 0x200,
+        Pickaxe = 0x400,
+        Shovel = 0x800,
+        FishingRod = 0x1000,
+        CarrotStick = 0x2000,
+        Elytra = 0x4000,
+        Spear = 0x8000,
+        Crossbow = 0x10000,
+        Shield = 0x20000,
+        EquipableBlock = 0x40000,
+        Compass = 0x80000,
+        WarpedFungusStick = 0x100000,
+    }
 }
 
 export enum EnchantmentNames {
@@ -94,14 +120,24 @@ export type Enchantments = EnchantmentNames | Enchant.Type;
 
 @nativeClass()
 export class EnchantmentInstance extends NativeStruct {
+    /**
+     * @deprecated use {@link getEnchantType} instead. The native type of this property is incorrect.
+     */
     @nativeField(int32_t)
     type: Enchantments;
     @nativeField(int32_t)
     level: int32_t;
+
+    getEnchantType(): Enchantments {
+        abstract();
+    }
 }
 
 @nativeClass()
 export class ItemEnchants extends NativeClass {
+    /**
+     * @deprecated use {@link getSlot} instead. The native type of this property is incorrect.
+     */
     @nativeField(uint32_t)
     slot: uint32_t;
     @nativeField(CxxVector.make(EnchantmentInstance), 0x08)
@@ -113,6 +149,10 @@ export class ItemEnchants extends NativeClass {
     /** >19 */
     @nativeField(CxxVector.make(EnchantmentInstance))
     enchants3: CxxVector<EnchantmentInstance>;
+
+    getSlot(): Enchant.Slot {
+        abstract();
+    }
 }
 
 export namespace EnchantUtils {

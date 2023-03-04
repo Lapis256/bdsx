@@ -86,7 +86,7 @@ import { Certificate, ConnectionRequest, JsonValue } from "./connreq";
 import { CxxOptional, CxxOptionalToUndefUnion } from "./cxxoptional";
 import { Dimension } from "./dimension";
 import { MobEffect, MobEffectInstance } from "./effects";
-import { EnchantUtils, ItemEnchants } from "./enchants";
+import { EnchantmentInstance, Enchantments, EnchantUtils, ItemEnchants } from "./enchants";
 import { GameMode } from "./gamemode";
 import { GameRule, GameRuleId, GameRules } from "./gamerules";
 import { HashedString, HashedStringToString } from "./hashedstring";
@@ -3060,6 +3060,10 @@ MobEffectInstance.load = function (tag) {
 };
 
 // enchants.ts
+EnchantmentInstance.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: EnchantmentInstance });
+
+ItemEnchants.prototype.getSlot = procHacker.js("?getSlot@ItemEnchants@@QEBAHXZ", int32_t, { this: ItemEnchants });
+
 EnchantUtils.applyEnchant = procHacker.js(
     "?applyEnchant@EnchantUtils@@SA_NAEAVItemStackBase@@W4Type@Enchant@@H_N@Z",
     bool_t,
