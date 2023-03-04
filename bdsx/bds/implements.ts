@@ -3082,7 +3082,7 @@ ItemEnchants.prototype.getEnchantment = procHacker.js(
 ItemEnchants.prototype.getSlot = procHacker.js("?getSlot@ItemEnchants@@QEBAHXZ", int32_t, { this: ItemEnchants });
 ItemEnchants.prototype.isEmpty = procHacker.js("?isEmpty@ItemEnchants@@QEBA_NXZ", bool_t, { this: ItemEnchants });
 
-EnchantUtils.applyEnchant = procHacker.js(
+const EnchantUtils$applyEnchant$EnchantType = procHacker.js(
     "?applyEnchant@EnchantUtils@@SA_NAEAVItemStackBase@@W4Type@Enchant@@H_N@Z",
     bool_t,
     null,
@@ -3091,6 +3091,35 @@ EnchantUtils.applyEnchant = procHacker.js(
     int32_t,
     bool_t,
 );
+const EnchantUtils$applyEnchant$EnchantmentInstance = procHacker.js(
+    "?applyEnchant@EnchantUtils@@SA_NAEAVItemStackBase@@W4Type@Enchant@@H_N@Z",
+    bool_t,
+    null,
+    ItemStack,
+    EnchantmentInstance,
+    bool_t,
+);
+const EnchantUtils$applyEnchant$ItemEnchants = procHacker.js(
+    "?applyEnchant@EnchantUtils@@SAHAEAVItemStackBase@@AEBVItemEnchants@@_N@Z",
+    bool_t,
+    null,
+    ItemStack,
+    ItemEnchants,
+    bool_t,
+);
+EnchantUtils.applyEnchant = function applyEnchant(
+    itemStack: ItemStack,
+    ...otherArgs: [enchant: Enchantments, level: number, allowUnsafe: boolean] | [enchant: EnchantmentInstance | ItemEnchants, allowUnsafe: boolean]
+): boolean {
+    if (typeof otherArgs[0] === "number") {
+        return EnchantUtils$applyEnchant$EnchantType(itemStack, ...otherArgs);
+    }
+    const [enchant, allowUnsafe] = otherArgs;
+    if (enchant instanceof EnchantmentInstance) {
+        return EnchantUtils$applyEnchant$EnchantmentInstance(itemStack, enchant, allowUnsafe);
+    }
+    return EnchantUtils$applyEnchant$ItemEnchants(itemStack, enchant, allowUnsafe);
+};
 EnchantUtils.getEnchantLevel = procHacker.js("?getEnchantLevel@EnchantUtils@@SAHW4Type@Enchant@@AEBVItemStackBase@@@Z", int32_t, null, uint8_t, ItemStack);
 EnchantUtils.hasCurse = procHacker.js("?hasCurse@EnchantUtils@@SA_NAEBVItemStackBase@@@Z", bool_t, null, ItemStack);
 EnchantUtils.hasEnchant = procHacker.js("?hasEnchant@EnchantUtils@@SA_NW4Type@Enchant@@AEBVItemStackBase@@@Z", bool_t, null, int16_t, ItemStack);

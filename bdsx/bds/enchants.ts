@@ -184,7 +184,13 @@ export class ItemEnchants extends NativeClass {
 }
 
 export namespace EnchantUtils {
-    export function applyEnchant(itemStack: ItemStack, enchant: Enchantments, level: number, allowUnsafe: boolean): boolean {
+    export function applyEnchant(itemStack: ItemStack, enchant: Enchantments, level: number, allowUnsafe: boolean): boolean;
+    export function applyEnchant(itemStack: ItemStack, enchant: EnchantmentInstance, allowUnsafe: boolean): boolean;
+    export function applyEnchant(itemStack: ItemStack, enchant: ItemEnchants, allowUnsafe: boolean): boolean;
+    export function applyEnchant(
+        itemStack: ItemStack,
+        ...otherArgs: [enchant: Enchantments, level: number, allowUnsafe: boolean] | [enchant: EnchantmentInstance | ItemEnchants, allowUnsafe: boolean]
+    ): boolean {
         abstract();
     }
     export function getEnchantLevel(enchant: Enchantments, itemStack: ItemStack): number {
