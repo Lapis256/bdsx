@@ -43,6 +43,7 @@ export namespace Enchant {
         CrossbowPiercing,
         CrossbowQuickCharge,
         SoulSpeed,
+        SwiftSneak,
 
         NumEnchantments,
         InvalidEnchantment,
