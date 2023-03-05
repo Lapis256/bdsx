@@ -79,6 +79,73 @@ export class Enchant extends NativeClass {
     }
 }
 
+@nativeClass()
+export class BowEnchant extends Enchant {
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class CrossbowEnchant extends Enchant {
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class CurseBindingEnchant extends Enchant {}
+
+@nativeClass()
+export class CurseVanishingEnchant extends Enchant {}
+
+@nativeClass()
+export class DiggingEnchant extends Enchant {
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class FishingEnchant extends Enchant {}
+
+@nativeClass()
+export class FrostWalkerEnchant extends Enchant {}
+
+@nativeClass()
+export class LootEnchant extends Enchant {}
+
+@nativeClass()
+export class MeleeWeaponEnchant extends Enchant {
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class MendingEnchant extends Enchant {}
+
+@nativeClass()
+export class ProtectionEnchant extends Enchant {
+    static THORNS_CHANCE_PER_LEVEL: number;
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class SoulSpeedEnchant extends Enchant {}
+
+@nativeClass()
+export class SwiftSneakEnchant extends Enchant {}
+
+@nativeClass()
+export class SwimEnchant extends Enchant {
+    static VALID_ENCHANTMENTS: CxxVector<Enchantments>;
+}
+
+@nativeClass()
+export class TridentChannelingEnchant extends Enchant {}
+
+@nativeClass()
+export class TridentImpalerEnchant extends Enchant {}
+
+@nativeClass()
+export class TridentLoyaltyEnchant extends Enchant {}
+
+@nativeClass()
+export class TridentRiptideEnchant extends Enchant {}
+
 export namespace Enchant {
     export enum Frequency {
         VeryRare = 1,

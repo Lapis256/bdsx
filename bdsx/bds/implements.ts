@@ -86,7 +86,31 @@ import { Certificate, ConnectionRequest, JsonValue } from "./connreq";
 import { CxxOptional, CxxOptionalToUndefUnion } from "./cxxoptional";
 import { Dimension } from "./dimension";
 import { MobEffect, MobEffectInstance } from "./effects";
-import { Enchant, EnchantmentInstance, Enchantments, EnchantUtils, ItemEnchants } from "./enchants";
+import {
+    BowEnchant,
+    CrossbowEnchant,
+    CurseBindingEnchant,
+    CurseVanishingEnchant,
+    DiggingEnchant,
+    Enchant,
+    EnchantmentInstance,
+    Enchantments,
+    EnchantUtils,
+    FishingEnchant,
+    FrostWalkerEnchant,
+    ItemEnchants,
+    LootEnchant,
+    MeleeWeaponEnchant,
+    MendingEnchant,
+    ProtectionEnchant,
+    SoulSpeedEnchant,
+    SwiftSneakEnchant,
+    SwimEnchant,
+    TridentChannelingEnchant,
+    TridentImpalerEnchant,
+    TridentLoyaltyEnchant,
+    TridentRiptideEnchant,
+} from "./enchants";
 import { GameMode } from "./gamemode";
 import { GameRule, GameRuleId, GameRules } from "./gamerules";
 import { HashedString, HashedStringToString } from "./hashedstring";
@@ -3095,6 +3119,178 @@ Enchant.prototype.isAvailable = procHacker.js("?isAvailable@Enchant@@QEBA_NXZ", 
 Enchant.prototype.isCompatibleWith = procHacker.js("?isCompatibleWith@Enchant@@UEBA_NW4Type@1@@Z", bool_t, { this: Enchant }, uint8_t);
 Enchant.prototype.isDisabled = procHacker.js("?isDisabled@Enchant@@QEBA_NXZ", bool_t, { this: Enchant });
 Enchant.prototype.isLootable = procHacker.js("?isLootable@Enchant@@QEBA_NXZ", bool_t, { this: Enchant });
+
+const vftableEnchantMap = new Map<bin64_t, typeof Enchant>(
+    [
+        BowEnchant,
+        CrossbowEnchant,
+        CurseBindingEnchant,
+        CurseVanishingEnchant,
+        DiggingEnchant,
+        FishingEnchant,
+        FrostWalkerEnchant,
+        LootEnchant,
+        MeleeWeaponEnchant,
+        MendingEnchant,
+        ProtectionEnchant,
+        SoulSpeedEnchant,
+        SwiftSneakEnchant,
+        SwimEnchant,
+        TridentChannelingEnchant,
+        TridentImpalerEnchant,
+        TridentLoyaltyEnchant,
+        TridentRiptideEnchant,
+    ].map(enchantClass => [proc[`??_7${enchantClass.name}@@6B@`].getAddressBin(), enchantClass]),
+);
+
+Enchant.setResolver(ptr => {
+    if (ptr === null) {
+        return null;
+    }
+    const vftable = ptr.getBin64();
+    const enchantsClass = vftableEnchantMap.get(vftable);
+    return ptr.as(enchantsClass ?? Enchant);
+});
+
+BowEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@BowEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+BowEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@BowEnchant@@UEBAHXZ", int32_t, { this: BowEnchant });
+BowEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@BowEnchant@@UEBAHH@Z", int32_t, { this: BowEnchant }, int32_t);
+BowEnchant.prototype.getMinCost = procHacker.js("?getMinCost@BowEnchant@@UEBAHH@Z", int32_t, { this: BowEnchant }, int32_t);
+
+CrossbowEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@CrossbowEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+CrossbowEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@CrossbowEnchant@@UEBAHXZ", int32_t, { this: CrossbowEnchant });
+CrossbowEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@CrossbowEnchant@@UEBAHH@Z", int32_t, { this: CrossbowEnchant }, int32_t);
+CrossbowEnchant.prototype.getMinCost = procHacker.js("?getMinCost@CrossbowEnchant@@UEBAHH@Z", int32_t, { this: CrossbowEnchant }, int32_t);
+CrossbowEnchant.prototype.isCompatibleWith = procHacker.js(
+    "?isCompatibleWith@CrossbowEnchant@@UEBA_NW4Type@Enchant@@@Z",
+    bool_t,
+    { this: CrossbowEnchant },
+    uint8_t,
+);
+
+CurseBindingEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@CurseBindingEnchant@@UEBAHH@Z", int32_t, { this: CurseBindingEnchant }, int32_t);
+CurseBindingEnchant.prototype.getMinCost = procHacker.js("?getMinCost@CurseBindingEnchant@@UEBAHH@Z", int32_t, { this: CurseBindingEnchant }, int32_t);
+
+CurseVanishingEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@CurseVanishingEnchant@@UEBAHH@Z", int32_t, { this: CurseVanishingEnchant }, int32_t);
+CurseVanishingEnchant.prototype.getMinCost = procHacker.js("?getMinCost@CurseVanishingEnchant@@UEBAHH@Z", int32_t, { this: CurseVanishingEnchant }, int32_t);
+
+DiggingEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@DiggingEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+DiggingEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@DiggingEnchant@@UEBAHXZ", int32_t, { this: DiggingEnchant });
+DiggingEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@DiggingEnchant@@UEBAHH@Z", int32_t, { this: DiggingEnchant }, int32_t);
+DiggingEnchant.prototype.getMinCost = procHacker.js("?getMinCost@DiggingEnchant@@UEBAHH@Z", int32_t, { this: DiggingEnchant }, int32_t);
+
+FishingEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@FishingEnchant@@UEBAHXZ", int32_t, { this: FishingEnchant });
+FishingEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@FishingEnchant@@UEBAHH@Z", int32_t, { this: FishingEnchant }, int32_t);
+FishingEnchant.prototype.getMinCost = procHacker.js("?getMinCost@FishingEnchant@@UEBAHH@Z", int32_t, { this: FishingEnchant }, int32_t);
+
+FrostWalkerEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@FrostWalkerEnchant@@UEBAHXZ", int32_t, { this: FrostWalkerEnchant });
+FrostWalkerEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@FrostWalkerEnchant@@UEBAHH@Z", int32_t, { this: FrostWalkerEnchant }, int32_t);
+FrostWalkerEnchant.prototype.getMinCost = procHacker.js("?getMinCost@FrostWalkerEnchant@@UEBAHH@Z", int32_t, { this: FrostWalkerEnchant }, int32_t);
+FrostWalkerEnchant.prototype.isTreasureOnly = procHacker.js(`?isTreasureOnly@FrostWalkerEnchant@@UEBA_NXZ`, bool_t, { this: FrostWalkerEnchant });
+
+LootEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@LootEnchant@@UEBAHXZ", int32_t, { this: LootEnchant });
+LootEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@LootEnchant@@UEBAHH@Z", int32_t, { this: LootEnchant }, int32_t);
+LootEnchant.prototype.getMinCost = procHacker.js("?getMinCost@LootEnchant@@UEBAHH@Z", int32_t, { this: LootEnchant }, int32_t);
+
+MeleeWeaponEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@MeleeWeaponEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+MeleeWeaponEnchant.prototype.getDamageBonus = procHacker.js(
+    "?getDamageBonus@MeleeWeaponEnchant@@UEBAMHAEBVActor@@@Z",
+    float32_t,
+    { this: MeleeWeaponEnchant },
+    int32_t,
+    Actor,
+);
+MeleeWeaponEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@MeleeWeaponEnchant@@UEBAHXZ", int32_t, { this: MeleeWeaponEnchant });
+MeleeWeaponEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@MeleeWeaponEnchant@@UEBAHH@Z", int32_t, { this: MeleeWeaponEnchant }, int32_t);
+MeleeWeaponEnchant.prototype.getMinCost = procHacker.js("?getMinCost@MeleeWeaponEnchant@@UEBAHH@Z", int32_t, { this: MeleeWeaponEnchant }, int32_t);
+MeleeWeaponEnchant.prototype.isMeleeDamageEnchant = procHacker.js(`?isMeleeDamageEnchant@MeleeWeaponEnchant@@UEBA_NXZ`, bool_t, { this: MeleeWeaponEnchant });
+
+MendingEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@MendingEnchant@@UEBAHXZ", int32_t, { this: MendingEnchant });
+MendingEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@MendingEnchant@@UEBAHH@Z", int32_t, { this: MendingEnchant }, int32_t);
+MendingEnchant.prototype.getMinCost = procHacker.js("?getMinCost@MendingEnchant@@UEBAHH@Z", int32_t, { this: MendingEnchant }, int32_t);
+MendingEnchant.prototype.isTreasureOnly = procHacker.js(`?isTreasureOnly@MendingEnchant@@UEBA_NXZ`, bool_t, { this: MendingEnchant });
+
+ProtectionEnchant.THORNS_CHANCE_PER_LEVEL = proc["?THORNS_CHANCE_PER_LEVEL@ProtectionEnchant@@0MB"].getFloat32();
+ProtectionEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@ProtectionEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+ProtectionEnchant.prototype.getDamageProtection = procHacker.js(
+    "?getDamageProtection@ProtectionEnchant@@UEBAHHAEBVActorDamageSource@@@Z",
+    int32_t,
+    { this: ProtectionEnchant },
+    int32_t,
+    ActorDamageSource,
+);
+ProtectionEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@ProtectionEnchant@@UEBAHXZ", int32_t, { this: ProtectionEnchant });
+ProtectionEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@ProtectionEnchant@@UEBAHH@Z", int32_t, { this: ProtectionEnchant }, int32_t);
+ProtectionEnchant.prototype.getMinCost = procHacker.js("?getMinCost@ProtectionEnchant@@UEBAHH@Z", int32_t, { this: ProtectionEnchant }, int32_t);
+ProtectionEnchant.prototype.isProtectionEnchant = procHacker.js(`?isProtectionEnchant@ProtectionEnchant@@UEBA_NXZ`, bool_t, { this: ProtectionEnchant });
+
+SoulSpeedEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@SoulSpeedEnchant@@UEBAHXZ", int32_t, { this: SoulSpeedEnchant });
+SoulSpeedEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@SoulSpeedEnchant@@UEBAHH@Z", int32_t, { this: SoulSpeedEnchant }, int32_t);
+SoulSpeedEnchant.prototype.getMinCost = procHacker.js("?getMinCost@SoulSpeedEnchant@@UEBAHH@Z", int32_t, { this: SoulSpeedEnchant }, int32_t);
+SoulSpeedEnchant.prototype.isDiscoverable = procHacker.js(`?isDiscoverable@SoulSpeedEnchant@@UEBA_NXZ`, bool_t, { this: SoulSpeedEnchant });
+SoulSpeedEnchant.prototype.isTreasureOnly = procHacker.js(`?isTreasureOnly@SoulSpeedEnchant@@UEBA_NXZ`, bool_t, { this: SoulSpeedEnchant });
+
+SwiftSneakEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@SwiftSneakEnchant@@UEBAHXZ", int32_t, { this: SwiftSneakEnchant });
+SwiftSneakEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@SwiftSneakEnchant@@UEBAHH@Z", int32_t, { this: SwiftSneakEnchant }, int32_t);
+SwiftSneakEnchant.prototype.getMinCost = procHacker.js("?getMinCost@SwiftSneakEnchant@@UEBAHH@Z", int32_t, { this: SwiftSneakEnchant }, int32_t);
+SwiftSneakEnchant.prototype.isDiscoverable = procHacker.js(`?isDiscoverable@SwiftSneakEnchant@@UEBA_NXZ`, bool_t, { this: SwiftSneakEnchant });
+SwiftSneakEnchant.prototype.isTreasureOnly = procHacker.js(`?isTreasureOnly@SwiftSneakEnchant@@UEBA_NXZ`, bool_t, { this: SwiftSneakEnchant });
+
+SwimEnchant.VALID_ENCHANTMENTS = proc[`?VALID_ENCHANTMENTS@SwimEnchant@@0V?$vector@W4Type@Enchant@@V?$allocator@W4Type@Enchant@@@std@@@std@@B`].as(
+    CxxVector.make(uint8_t),
+);
+SwimEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@SwimEnchant@@UEBAHXZ", int32_t, { this: SwimEnchant });
+SwimEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@SwimEnchant@@UEBAHH@Z", int32_t, { this: SwimEnchant }, int32_t);
+SwimEnchant.prototype.getMinCost = procHacker.js("?getMinCost@SwimEnchant@@UEBAHH@Z", int32_t, { this: SwimEnchant }, int32_t);
+
+TridentChannelingEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@TridentChannelingEnchant@@UEBAHXZ", int32_t, { this: TridentChannelingEnchant });
+TridentChannelingEnchant.prototype.getMaxCost = procHacker.js(
+    "?getMaxCost@TridentChannelingEnchant@@UEBAHH@Z",
+    int32_t,
+    { this: TridentChannelingEnchant },
+    int32_t,
+);
+TridentChannelingEnchant.prototype.getMinCost = procHacker.js(
+    "?getMinCost@TridentChannelingEnchant@@UEBAHH@Z",
+    int32_t,
+    { this: TridentChannelingEnchant },
+    int32_t,
+);
+TridentChannelingEnchant.prototype.isCompatibleWith = procHacker.js(
+    "?isCompatibleWith@TridentChannelingEnchant@@UEBA_NW4Type@Enchant@@@Z",
+    bool_t,
+    { this: TridentChannelingEnchant },
+    uint8_t,
+);
+
+TridentImpalerEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@TridentImpalerEnchant@@UEBAHXZ", int32_t, { this: TridentImpalerEnchant });
+TridentImpalerEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@TridentImpalerEnchant@@UEBAHH@Z", int32_t, { this: TridentImpalerEnchant }, int32_t);
+TridentImpalerEnchant.prototype.getMinCost = procHacker.js("?getMinCost@TridentImpalerEnchant@@UEBAHH@Z", int32_t, { this: TridentImpalerEnchant }, int32_t);
+TridentImpalerEnchant.prototype.getDamageBonus = procHacker.js(
+    "?getDamageBonus@TridentImpalerEnchant@@UEBAMHAEBVActor@@@Z",
+    float32_t,
+    { this: TridentImpalerEnchant },
+    int32_t,
+    Actor,
+);
+
+TridentLoyaltyEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@TridentLoyaltyEnchant@@UEBAHXZ", int32_t, { this: TridentLoyaltyEnchant });
+TridentLoyaltyEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@TridentLoyaltyEnchant@@UEBAHH@Z", int32_t, { this: TridentLoyaltyEnchant }, int32_t);
+TridentLoyaltyEnchant.prototype.getMinCost = procHacker.js("?getMinCost@TridentLoyaltyEnchant@@UEBAHH@Z", int32_t, { this: TridentLoyaltyEnchant }, int32_t);
+
+TridentRiptideEnchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@TridentRiptideEnchant@@UEBAHXZ", int32_t, { this: TridentRiptideEnchant });
+TridentRiptideEnchant.prototype.getMaxCost = procHacker.js("?getMaxCost@TridentRiptideEnchant@@UEBAHH@Z", int32_t, { this: TridentRiptideEnchant }, int32_t);
+TridentRiptideEnchant.prototype.getMinCost = procHacker.js("?getMinCost@TridentRiptideEnchant@@UEBAHH@Z", int32_t, { this: TridentRiptideEnchant }, int32_t);
 
 EnchantmentInstance.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: EnchantmentInstance });
 EnchantmentInstance.prototype.setEnchantLevel = procHacker.js("?setEnchantLevel@EnchantmentInstance@@QEAAXH@Z", void_t, { this: EnchantmentInstance }, int32_t);
