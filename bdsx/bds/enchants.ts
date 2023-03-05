@@ -2,9 +2,91 @@ import { abstract } from "../common";
 import { CxxVector } from "../cxxvector";
 import { NativeClass, nativeClass, nativeField, NativeStruct } from "../nativeclass";
 import { int32_t, uint32_t } from "../nativetype";
+import { Actor, ActorDamageSource } from "./actor";
+import { HashedString } from "./hashedstring";
 import { ItemStack } from "./inventory";
 
+@nativeClass()
+export class Enchant extends NativeClass {
+    static mEnchants: CxxVector<Enchant>;
+
+    static create(type: Enchantments): Enchant {
+        abstract();
+    }
+    static stringFromEnchantSlot(slot: Enchant.Slot): string {
+        abstract();
+    }
+
+    getDamageBonus(level: number, actor: Actor): number {
+        abstract();
+    }
+    getDamageProtection(level: number, damageSource: ActorDamageSource): number {
+        abstract();
+    }
+    getDescription(): string {
+        abstract();
+    }
+    getDescriptionId(): string {
+        abstract();
+    }
+    getEnchantType(): Enchantments {
+        abstract();
+    }
+    getFrequency(): Enchant.Frequency {
+        abstract();
+    }
+    getMaxCost(level: number): number {
+        abstract();
+    }
+    getMaxLevel(): number {
+        abstract();
+    }
+    getMinCost(level: number): number {
+        abstract();
+    }
+    getMinLevel(): number {
+        abstract();
+    }
+    protected _getStringId(): HashedString {
+        abstract();
+    }
+    getStringId(): string {
+        return this._getStringId().str;
+    }
+    isAvailable(): boolean {
+        abstract();
+    }
+    isCompatibleWith(type: Enchantments): boolean {
+        abstract();
+    }
+    isDisabled(): boolean {
+        abstract();
+    }
+    isDiscoverable(): boolean {
+        abstract();
+    }
+    isLootable(): boolean {
+        abstract();
+    }
+    isMeleeDamageEnchant(): boolean {
+        abstract();
+    }
+    isProtectionEnchant(): boolean {
+        abstract();
+    }
+    isTreasureOnly(): boolean {
+        abstract();
+    }
+}
+
 export namespace Enchant {
+    export enum Frequency {
+        VeryRare = 1,
+        Rare = 3,
+        Uncommon = 10,
+        Common = 30,
+    }
+
     export enum Type {
         ArmorAll,
         ArmorFire,
@@ -175,7 +257,7 @@ export class ItemEnchants extends NativeClass {
     getEnchantment(type: Enchantments): EnchantmentInstance {
         abstract();
     }
-    getSlot(): number {
+    getSlot(): Enchant.Slot {
         abstract();
     }
     isEmpty(): boolean {

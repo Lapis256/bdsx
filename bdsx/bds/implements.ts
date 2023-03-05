@@ -86,7 +86,7 @@ import { Certificate, ConnectionRequest, JsonValue } from "./connreq";
 import { CxxOptional, CxxOptionalToUndefUnion } from "./cxxoptional";
 import { Dimension } from "./dimension";
 import { MobEffect, MobEffectInstance } from "./effects";
-import { EnchantmentInstance, Enchantments, EnchantUtils, ItemEnchants } from "./enchants";
+import { Enchant, EnchantmentInstance, Enchantments, EnchantUtils, ItemEnchants } from "./enchants";
 import { GameMode } from "./gamemode";
 import { GameRule, GameRuleId, GameRules } from "./gamerules";
 import { HashedString, HashedStringToString } from "./hashedstring";
@@ -3060,6 +3060,42 @@ MobEffectInstance.load = function (tag) {
 };
 
 // enchants.ts
+Enchant.mEnchants = proc[
+    "?mEnchants@Enchant@@2V?$vector@V?$unique_ptr@VEnchant@@U?$default_delete@VEnchant@@@std@@@std@@V?$allocator@V?$unique_ptr@VEnchant@@U?$default_delete@VEnchant@@@std@@@std@@@2@@std@@A"
+].as(CxxVector.make(Enchant.ref()));
+Enchant.create = procHacker.js("?getEnchant@Enchant@@SAPEBV1@AEBW4Type@1@@Z", Enchant, null, uint8_t.ref());
+Enchant.stringFromEnchantSlot = procHacker.js(
+    "?stringFromEnchantSlot@Enchant@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBW4Slot@1@@Z",
+    CxxString,
+    { structureReturn: true },
+    int32_t.ref(),
+);
+Enchant.prototype.getDamageProtection = procHacker.js(
+    "?getDamageProtection@Enchant@@UEBAHHAEBVActorDamageSource@@@Z",
+    int32_t,
+    { this: Enchant },
+    int32_t,
+    ActorDamageSource,
+);
+Enchant.prototype.getDamageBonus = procHacker.js("?getDamageBonus@Enchant@@UEBAMHAEBVActor@@@Z", float32_t, { this: Enchant }, int32_t, Actor);
+Enchant.prototype.getDescription = procHacker.js("?getDescription@Enchant@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ", CxxString, {
+    this: Enchant,
+});
+Enchant.prototype.getDescriptionId = procHacker.js("?getDescriptionId@Enchant@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ", CxxString, {
+    this: Enchant,
+});
+Enchant.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: Enchant });
+Enchant.prototype.getFrequency = procHacker.js("?getFrequency@Enchant@@QEBA?AW4Frequency@1@XZ", int32_t, { this: Enchant });
+Enchant.prototype.getMaxCost = procHacker.js("?getMaxCost@Enchant@@UEBAHH@Z", int32_t, { this: Enchant }, int32_t);
+Enchant.prototype.getMaxLevel = procHacker.js("?getMaxLevel@Enchant@@UEBAHXZ", int32_t, { this: Enchant });
+Enchant.prototype.getMinCost = procHacker.js("?getMinCost@Enchant@@UEBAHH@Z", int32_t, { this: Enchant }, int32_t);
+Enchant.prototype.getMinLevel = procHacker.js("?getMinLevel@Enchant@@UEBAHXZ", int32_t, { this: Enchant });
+(Enchant.prototype as any)._getStringId = procHacker.js("?getStringId@Enchant@@QEBAAEBVHashedString@@XZ", HashedString, { this: Enchant });
+Enchant.prototype.isAvailable = procHacker.js("?isAvailable@Enchant@@QEBA_NXZ", bool_t, { this: Enchant });
+Enchant.prototype.isCompatibleWith = procHacker.js("?isCompatibleWith@Enchant@@UEBA_NW4Type@1@@Z", bool_t, { this: Enchant }, uint8_t);
+Enchant.prototype.isDisabled = procHacker.js("?isDisabled@Enchant@@QEBA_NXZ", bool_t, { this: Enchant });
+Enchant.prototype.isLootable = procHacker.js("?isLootable@Enchant@@QEBA_NXZ", bool_t, { this: Enchant });
+
 EnchantmentInstance.prototype.getEnchantType = procHacker.js("?getEnchantType@Enchant@@QEBA?AW4Type@1@XZ", uint8_t, { this: EnchantmentInstance });
 EnchantmentInstance.prototype.setEnchantLevel = procHacker.js("?setEnchantLevel@EnchantmentInstance@@QEAAXH@Z", void_t, { this: EnchantmentInstance }, int32_t);
 
